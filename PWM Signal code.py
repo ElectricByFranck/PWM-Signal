@@ -3,7 +3,7 @@ from machine import UART, Pin, PWM, ADC
 import time
 
 #Initialisattion the UART serial communication protocols
-uart =UART(1, baurate=9600, tx=Pin(8), rx=(9))
+uart = UART(1, baurate=9600, tx=Pin(8), rx=(9))
 uart.init(bits=8, parity=None, stop=1)
 
 #Initialisation of the PWM Pin
@@ -26,23 +26,23 @@ while True:
         time.sleep(4) #After sending the message wait for 4 second for any reply
 
         #Receiving DATA
-        if uart.any():
-            data=uart.read()
-            print('Here is the value I received:, {data}')
+        if uart.any(): #Checking if any data is available 
+            data=uart.read() #Store the data in a variabale called data
+            print('Here is the value received:, {data}')
             time.sleep(4) #After receiving the message wait for 4 second for the new signal
         else:
             print('I didn\'t received any value yet!!')
     
     #Reading DATA
-    if uart.any():
-        data=uart.read()
+    if uart.any(): #Checking if any data is available 
+        data=uart.read() #Store the data in a variabale called data
         print('Received:', data)
         adc_value = adc.read_u16()
         uart.write(f'{adc_value}\n') #Read the value of the PWM signal
         print(f'Sent ADC value:{adc_value}')
         time_sleep(4) #Wait for 4 seconds before sending another PWM signal
     else:
-        print('No value to be readen yet!!')
+        print('No value yet!!')
 
 
 
